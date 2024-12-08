@@ -443,8 +443,20 @@ namespace backgroundClient
                 columns++;
             }
 
-            // this.Width -= 2; // For some reason the width is 2 pixels larger than the shortcuts. Temporary fix
-            // Fixed by setting the width of the ucPanel to the real value up here 
+            this.Width -= 2; // For some reason the width is 2 pixels larger than the shortcuts. Temporary fix
+
+            // Apply rounded corners
+            using (GraphicsPath path = new GraphicsPath())
+            {
+                int radius = 12;
+                path.AddArc(0, 0, radius, radius, 180, 90);
+                path.AddArc(this.Width - radius, 0, radius, radius, 270, 90);
+                path.AddArc(this.Width - radius, this.Height - radius, radius, radius, 0, 90);
+                path.AddArc(0, this.Height - radius, radius, radius, 90, 90);
+                path.CloseFigure();
+
+                this.Region = new Region(path);
+            }
         }
 
         // OLD (Having some issues with the uc build, so keeping the old code below)
